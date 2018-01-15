@@ -29,11 +29,14 @@ class App extends React.Component {
             // sync books by mapping over searchResults, and
             // iterating over this.props.books      
             const adjustedBooks = searchResults.map(searchResult => {
-                this.state.myReads.forEach(book => {
-                if (book.id === searchResult.id) searchResult.shelf = book.shelf
+                const book = this.state.myReads.find(b => b.id === searchResult.id)
+                if (book) {
+                  searchResult.shelf = book.shelf
+                } else {
+                  searchResult.shelf = 'none'
+                }            
+                return searchResult
               })
-              return searchResult
-            })
       
             // finally, setState
             this.setState({ searchedBooks: adjustedBooks })
